@@ -1,47 +1,99 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Real Estate AI Tools | Investment Calculator</title>
-<style>
-:root{color-scheme:light;--ink:#142a39;--muted:#536674;--line:#dce5e8;--accent:#087f75;--bg:#f1f6f7}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:16px/1.5 system-ui,sans-serif;color:var(--ink)}main{max-width:940px;margin:auto;padding:24px 16px 40px}header{background:#12333e;color:white;padding:28px;border-radius:18px;margin-bottom:20px}header p{color:#c5e0df;margin:6px 0}h1{font-size:clamp(25px,5vw,38px);line-height:1.15;margin:10px 0}h2{font-size:21px;margin:0 0 14px}small{color:var(--muted)}header small{color:#c5e0df}section{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}.fields,.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}label{display:flex;flex-direction:column;gap:5px;font-size:14px;font-weight:600}input{width:100%;border:1px solid #b8c8cd;border-radius:8px;padding:11px;font:inherit;color:var(--ink);background:white}input:focus{outline:2px solid var(--accent)}button{border:0;border-radius:9px;background:var(--accent);color:white;font:inherit;font-weight:700;padding:12px 18px;margin:16px 0;cursor:pointer}.result{padding:13px;border-radius:10px;background:#eaf5f2;overflow-wrap:anywhere}.result span{display:block;font-size:13px;color:#405d5c}.result strong{font-size:clamp(17px,3vw,23px);font-variant-numeric:tabular-nums}.error{color:#a12222;font-weight:600}footer{font-size:13px;color:var(--muted)}.plan{border-top:1px solid var(--line);padding-top:15px;margin-top:15px}h3{margin:0 0 10px;font-size:17px}button:focus-visible{outline:3px solid #16333e;outline-offset:3px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181712">
+  <meta name="description" content="THE SPIDER DXB is an open-source UAE real estate workspace for rental yield, mortgage, developer payment plans, property comparisons and resale scenarios.">
+  <meta property="og:title" content="THE SPIDER DXB | UAE Property Investment Tools">
+  <meta property="og:description" content="Model UAE property investments with transparent financial assumptions and local calculations.">
+  <meta property="og:type" content="website">
+  <title>THE SPIDER DXB | UAE Property Investment Tools</title>
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./tools.css">
+  <script type="module" src="./app.js"></script>
 </head>
-<body><main>
-<header><small>OPEN SOURCE · v0.1</small><h1>Real Estate AI Tools</h1><p>UAE property investment and payment plan calculator</p><small>Independent calculations · AED · No sign-in required</small></header>
-<section><h2>01 / Investment analysis</h2><form id="investment"><div class="fields">
-<label>Purchase price (AED)<input name="price" type="number" min="1" max="1000000000000" step="any" required value="1000000"></label>
-<label>Annual rent (AED)<input name="rent" type="number" min="0" max="1000000000000" step="any" required value="80000"></label>
-<label>Annual expenses (AED)<input name="expenses" type="number" min="0" max="1000000000000" step="any" required value="12000"></label>
-<label>Purchase costs (% of price)<input name="fees" type="number" min="0" max="100" step="any" required value="4"></label>
-<label>Vacancy (% of annual rent)<input name="vacancy" type="number" min="0" max="100" step="any" required value="5"></label>
-</div><button type="submit">Calculate returns</button></form><p id="investment-error" class="error" role="alert" hidden></p><div id="investment-results" class="results" aria-live="polite"></div><p><small>Gross yield = annual rent / price. Net yield accounts for vacancy, annual expenses and purchase costs. No financing, taxes or resale gains are included. Enter actual fees and costs.</small></p></section>
-<section><h2>02 / Compare developer payment plans</h2><form id="payment"><label>Property price (AED)<input name="price" type="number" min="1" max="1000000000000" step="any" required value="1000000"></label>
-<div class="plan"><h3>Plan A</h3><div class="fields"><label>Booking (%)<input name="aBooking" type="number" min="0" max="100" step="any" required value="10"></label><label>During construction (%)<input name="aConstruction" type="number" min="0" max="100" step="any" required value="30"></label><label>At handover (%)<input name="aHandover" type="number" min="0" max="100" step="any" required value="60"></label><label>Post-handover (%)<input name="aPost" type="number" min="0" max="100" step="any" required value="0"></label><label>Construction months<input name="aMonths" type="number" min="1" max="240" step="1" required value="36"></label><label>Post-handover months<input name="aPostMonths" type="number" min="1" max="240" step="1" required value="36"></label></div></div>
-<div class="plan"><h3>Plan B</h3><div class="fields"><label>Booking (%)<input name="bBooking" type="number" min="0" max="100" step="any" required value="20"></label><label>During construction (%)<input name="bConstruction" type="number" min="0" max="100" step="any" required value="20"></label><label>At handover (%)<input name="bHandover" type="number" min="0" max="100" step="any" required value="20"></label><label>Post-handover (%)<input name="bPost" type="number" min="0" max="100" step="any" required value="40"></label><label>Construction months<input name="bMonths" type="number" min="1" max="240" step="1" required value="36"></label><label>Post-handover months<input name="bPostMonths" type="number" min="1" max="240" step="1" required value="48"></label></div></div>
-<button type="submit">Compare plans</button></form><p id="payment-error" class="error" role="alert" hidden></p><div id="payment-results" aria-live="polite"></div><p><small>Monthly figures assume equal installments. Actual developer milestones, registration fees and financing may differ. This compares cash commitments, not financing costs or investment performance.</small></p></section>
-<footer>Educational planning tool, not a valuation or financial recommendation. All figures are user-entered and calculated locally. No live market data or AI model is connected in v0.1.</footer>
-</main><script>
-'use strict';
-const money = n => new Intl.NumberFormat('en-AE',{style:'currency',currency:'AED',maximumFractionDigits:2,minimumFractionDigits:0}).format(n);
-const percent = n => n.toFixed(2)+'%';
-function investment(price,rent,expenses,fees,vacancy){
- if(![price,rent,expenses,fees,vacancy].every(Number.isFinite)||price<=0||rent<0||expenses<0||fees<0||fees>100||vacancy<0||vacancy>100) throw Error('Enter valid investment amounts and percentages.');
- const total=price*(1+fees/100), effectiveRent=rent*(1-vacancy/100), net=effectiveRent-expenses;
- return {total,effectiveRent,net,grossYield:rent/price*100,netYield:net/total*100,monthlyNet:net/12};
-}
-function paymentPlan(price,booking,construction,handover,post,months,postMonths){
- const shares=[booking,construction,handover,post];
- if(!Number.isFinite(price)||price<=0||!shares.every(n=>Number.isFinite(n)&&n>=0&&n<=100)||!Number.isInteger(months)||months<1||!Number.isInteger(postMonths)||postMonths<1) throw Error('Enter valid plan amounts and months.');
- if(Math.abs(shares.reduce((a,b)=>a+b,0)-100)>0.000001) throw Error('Each payment plan must total exactly 100%.');
- const [b,c,h,p]=shares.map(n=>price*n/100);
- return {booking:b,construction:c,handover:h,post:p,before:b+c,through:b+c+h,monthly:c/months,postMonthly:p/postMonths};
-}
-function renderResults(target,entries){target.replaceChildren(); for(const [label,value] of entries){const box=document.createElement('div');box.className='result';const s=document.createElement('span');s.textContent=label;const v=document.createElement('strong');v.textContent=value;box.append(s,v);target.append(box);}}
-const value=(form,name)=>form.elements.namedItem(name).valueAsNumber;
-function showError(id,message){const el=document.getElementById(id);el.textContent=message;el.hidden=!message;}
-function updateInvestment(event){event?.preventDefault();const form=document.getElementById('investment'),out=document.getElementById('investment-results');try{const r=investment(...['price','rent','expenses','fees','vacancy'].map(k=>value(form,k)));showError('investment-error','');renderResults(out,[['Gross rental yield',percent(r.grossYield)],['Net rental yield',percent(r.netYield)],['Annual net rental income',money(r.net)],['Average monthly net income',money(r.monthlyNet)],['Total acquisition cost',money(r.total)],['Effective annual rent',money(r.effectiveRent)]]);}catch(e){out.replaceChildren();showError('investment-error',e.message);}}
-function updatePayment(event){event?.preventDefault();const form=document.getElementById('payment'),out=document.getElementById('payment-results');out.replaceChildren();try{const calc=p=>paymentPlan(value(form,'price'),...['Booking','Construction','Handover','Post','Months','PostMonths'].map(k=>value(form,p+k)));const plans=[calc('a'),calc('b')];showError('payment-error','');plans.forEach((r,i)=>{const h=document.createElement('h3');h.textContent='Plan '+(i?'B':'A');const g=document.createElement('div');g.className='results';renderResults(g,[['Booking',money(r.booking)],['During construction',money(r.construction)],['At handover',money(r.handover)],['Post-handover total',money(r.post)],['Total before handover',money(r.before)],['Total through handover',money(r.through)],['Average construction installment',money(r.monthly)],['Average post-handover installment',money(r.postMonthly)]]);out.append(h,g);});}catch(e){showError('payment-error',e.message);}}
-if(typeof document!=='undefined'){document.getElementById('investment').addEventListener('submit',updateInvestment);document.getElementById('payment').addEventListener('submit',updatePayment);updateInvestment();updatePayment();}
-if(typeof module!=='undefined')module.exports={investment,paymentPlan};
-</script></body></html>
+<body>
+  <a class="skip-link" href="#main-content" data-copy="skip">Skip to content</a>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#overview">
+      <img src="./mark.svg" width="42" height="42" alt="">
+      <span><strong>THE SPIDER <b>DXB</b></strong><small data-copy="brandLine">REAL ESTATE INTELLIGENCE</small></span>
+    </a>
+    <nav aria-label="Workspace" id="primary-nav">
+      <p class="nav-caption" data-copy="workspace">Workspace</p>
+      <a href="#overview" data-route="overview" aria-current="page"><span data-icon="grid"></span><span data-copy="overview">Overview</span></a>
+      <p class="nav-caption" data-copy="toolNav">Financial tools</p>
+      <a href="#investment" data-route="investment"><span data-icon="chart"></span><span data-copy="investment">Investment analysis</span></a>
+      <a href="#mortgage" data-route="mortgage"><span data-icon="home"></span><span data-copy="mortgage">Mortgage calculator</span></a>
+      <a href="#payments" data-route="payments"><span data-icon="calendar"></span><span data-copy="payments">Payment plans</span></a>
+      <a href="#compare" data-route="compare"><span data-icon="compare"></span><span data-copy="compare">Compare properties</span></a>
+      <a href="#resale" data-route="resale"><span data-icon="trend"></span><span data-copy="resale">Resale scenarios</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="https://github.com/abdomhmoud7866-bit/Real-Estate-Ai-Tools" class="source-link"><span data-icon="code"></span><span data-copy="source">GitHub repository</span><span data-icon="external"></span></a>
+      <p><span class="currency-dot"></span><span data-copy="currency">AED · UAE dirham</span></p>
+    </div>
+  </aside>
+  <div id="print-brand" class="print-brand">
+    <img src="./mark.svg" width="34" height="34" alt="">
+    <strong dir="ltr">THE SPIDER DXB</strong>
+    <span data-copy="printTitle">Property investment report</span>
+  </div>
+  <div class="app-frame">
+    <header class="topbar">
+      <div class="breadcrumb">
+        <button class="icon-button menu-toggle" id="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open navigation"><span data-icon="menu"></span></button>
+        <a class="mobile-brand" href="#overview"><img src="./mark.svg" width="30" height="30" alt=""><strong dir="ltr">THE SPIDER <b>DXB</b></strong></a>
+        <span class="breadcrumb-root" data-copy="workspace">Workspace</span>
+        <span class="breadcrumb-separator" data-icon="chevron"></span>
+        <span id="current-page">Overview</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-button report-button" id="report-button" type="button" aria-label="Print report" hidden><span data-icon="print"></span><span data-copy="report">Print report</span></button>
+        <button class="icon-button language-toggle" id="language-toggle" type="button" title="Switch to Arabic"><span data-icon="globe"></span><span id="language-label" lang="ar">العربية</span></button>
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false"><span data-icon="moon"></span></button>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <section id="overview" class="overview" aria-labelledby="overview-title">
+        <div class="page-heading">
+          <div>
+            <h1 id="overview-title" tabindex="-1" data-copy="overviewTitle">Investment overview</h1>
+            <p data-copy="overviewDescription">Analyze UAE property deals, from purchase costs to exit returns.</p>
+          </div>
+          <span class="sample-label"><span class="sample-dot"></span><span data-copy="sample">Illustrative figures</span></span>
+        </div>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-inner">
+            <p class="hero-kicker"><span data-icon="pin"></span><span data-copy="heroKicker">UAE PROPERTY WORKSPACE</span></p>
+            <h2 id="hero-title" data-copy="heroTitle">Underwrite your next property.</h2>
+            <p class="hero-description" data-copy="heroDescription">Estimate returns, model financing and compare payment schedules before committing to a deal.</p>
+            <a class="hero-button" href="#investment"><span data-copy="heroAction">Analyze an investment</span><span data-icon="arrow"></span></a>
+          </div>
+        </section>
+        <section class="snapshot" aria-labelledby="snapshot-title">
+          <div class="section-heading">
+            <div><h2 id="snapshot-title" data-copy="snapshotTitle">Sample investment</h2><p data-copy="snapshotDescription">A starting point for exploring the rental yield calculator.</p></div>
+            <a href="#investment" class="text-link"><span data-copy="seeAssumptions">Open yield calculator</span><span data-icon="arrow"></span></a>
+          </div>
+          <div class="snapshot-grid" id="snapshot-grid"></div>
+        </section>
+        <section class="tool-section" aria-labelledby="tools-heading">
+          <div class="section-heading">
+            <div><h2 id="tools-heading" data-copy="toolNav">Financial tools</h2><p data-copy="toolsDescription">Choose a tool to model a deal using your own figures.</p></div>
+          </div>
+          <div class="tool-link-grid" id="tool-link-grid"></div>
+        </section>
+      </section>
+      <div id="tool-view" hidden></div>
+      <noscript><p>Enable JavaScript to use the calculators. Your inputs are calculated in your browser.</p></noscript>
+    </main>
+    <footer class="app-footer">
+      <span dir="ltr">THE SPIDER DXB</span>
+      <span data-copy="footerNote">Estimates are calculated in your browser. Verify costs and contract terms independently.</span>
+    </footer>
+  </div>
+</body>
+</html>

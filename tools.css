@@ -1,0 +1,183 @@
+.finance-heading { margin-block-end: 22px; }
+.finance-heading h1 {
+  font: 500 clamp(33px, 3.6vw, 49px)/1.12 var(--serif);
+  letter-spacing: -.045em;
+}
+:root[dir="rtl"] .finance-heading h1 { letter-spacing: normal; }
+.finance-heading p { margin-block-start: 5px; color: var(--muted); font-size: 14px; }
+.tool-layout {
+  display: grid;
+  align-items: start;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 16px;
+}
+.tool-card {
+  min-width: 0;
+  padding: clamp(15px, 2vw, 24px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--surface);
+}
+.tool-card h2 { margin-block-end: 12px; font: 500 23px/1.2 var(--serif); }
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 126px), 1fr));
+  gap: 12px;
+}
+.tool-field { display: flex; flex-direction: column; justify-content: end; gap: 5px; min-width: 0; }
+.field-label { color: var(--text); font-weight: 650; font-size: 12px; }
+.field-input { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.field-input input, .tool-field select {
+  appearance: auto;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  min-height: 42px;
+  padding: 8px 9px;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--page);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.field-input input {
+  grid-area: 1 / 1 / 2 / 3;
+  padding-inline-end: 49px;
+  appearance: textfield;
+}
+.field-input input::-webkit-inner-spin-button { appearance: none; }
+.field-input input[aria-invalid="true"] { border-color: var(--tool-error, #923626); }
+.field-unit {
+  grid-area: 1 / 2 / 2 / 3;
+  margin-inline-end: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  pointer-events: none;
+}
+.field-group {
+  display: block;
+  min-width: 0;
+  margin: 20px 0 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-block-start: 1px solid var(--line);
+}
+.field-group legend { padding: 0 8px 0 0; color: var(--text); font-size: 14px; font-weight: 700; }
+:root[dir="rtl"] .field-group legend { padding: 0 0 0 8px; }
+.field-note { margin-block-end: 10px; color: var(--muted); font-size: 12px; }
+.financing-field, .loan-fields { margin-block-end: 12px; }
+.tool-action, .schedule-button {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.tool-action { margin-block-start: 16px; color: var(--accent-ink); background: var(--accent); }
+.tool-action:hover { background: #f2cc94; }
+.tool-error { margin-block-start: 14px; color: var(--tool-error, #923626); font-size: 13px; font-weight: 650; }
+:root[data-theme="dark"] .finance-tool { --tool-error: #ffad9c; }
+.tool-status { margin-block-start: 5px; color: var(--muted); font-size: 12px; }
+.tool-status:empty { margin: 0; }
+.tool-provenance { margin-block: -4px 14px; color: var(--gold); font-size: 12px; }
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
+  gap: 9px;
+  margin: 0;
+}
+.metric-card {
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--page);
+  overflow-wrap: anywhere;
+}
+.metric-card:first-child { background: var(--tile); }
+.metric-card dt { color: var(--muted); font-size: 12px; font-weight: 650; }
+.metric-card dd {
+  margin: 4px 0 0;
+  color: var(--text);
+  font: 600 22px/1.25 var(--serif);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.output-section, .tool-method { margin-block-start: 22px; padding-block-start: 16px; border-block-start: 1px solid var(--line); }
+.output-section h3, .tool-method h3, .report-assumptions h3 { margin-block-end: 9px; font-size: 15px; }
+.tool-method p, .tool-method-copy { color: var(--muted); font-size: 12px; }
+.tool-method-copy { margin-block-start: 10px; }
+.table-scroll {
+  min-width: 0;
+  max-height: 370px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.data-table { border-collapse: collapse; width: 100%; color: var(--text); font-size: 12px; font-variant-numeric: tabular-nums; }
+.data-table :is(td, th) { padding: 8px 10px; border-block-end: 1px solid var(--line); text-align: end; }
+.data-table tr > :first-child { text-align: start; }
+.data-table thead { position: sticky; top: 0; background: var(--tile); }
+.data-table td { white-space: nowrap; }
+.data-table tbody th { font-weight: 550; }
+.data-table tbody tr:last-child :is(th, td) { border: 0; }
+.tool-details { margin-block-start: 12px; }
+.tool-details summary { min-height: 38px; padding-block: 8px; cursor: pointer; color: var(--gold); font-size: 13px; font-weight: 650; }
+.schedule-switch { display: flex; gap: 8px; margin-block-end: 10px; }
+.schedule-button { background: var(--surface); color: var(--gold); border-color: var(--line); }
+.schedule-button:hover, .schedule-button[aria-pressed="true"] { background: var(--tile); }
+.cash-flow-chart {
+  margin: 12px 0 0;
+  padding: 8px 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--page);
+}
+.cash-flow-chart svg { width: 100%; height: auto; color: var(--gold); }
+.cash-flow-chart figcaption { padding-inline: 5px; color: var(--text); font-size: 12px; font-weight: 650; }
+.cash-flow-chart text { fill: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.plot-grid { stroke: var(--line); }
+.plot-baseline { stroke: var(--muted); opacity: .55; }
+.plot-line { fill: none; stroke: currentColor; stroke-width: 2.5; }
+.plot-area { fill: currentColor; opacity: .12; }
+.plot-marker { fill: currentColor; stroke: var(--surface); stroke-width: 2; }
+.chart-selection { padding-inline: 5px; font-size: 13px; font-weight: 700; }
+.year-control { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 10px; padding-inline: 5px; color: var(--muted); font-size: 12px; }
+.year-control input { flex: 1; min-width: 90px; min-height: 32px; margin: 0; accent-color: var(--gold); direction: ltr; }
+.tool-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+.tool-print-only { display: none; }
+@media (max-width: 1030px) {
+  .tool-layout { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  .finance-heading, .tool-card h2 { margin-block-end: 8px; }
+  .finance-heading h1 { font-size: 30px; }
+  .finance-heading p, .tool-card h2 { display: none; }
+  .tool-layout { display: block; }
+  .tool-form, .schedule-switch, .year-control, .cash-flow-details, .tool-details:not([open]) { display: none; }
+  .tool-details[open] summary { display: none; }
+  .tool-print-only { display: block; }
+  .tool-card { padding: 0; border: 0; }
+  .tool-provenance { margin-block: 0 10px; }
+  .report-assumptions { margin-block-end: 14px; break-inside: avoid; }
+  .report-assumptions dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; margin: 0; font-size: 11px; }
+  .report-assumptions dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+  .metric-grid { gap: 5px; }
+  .metric-card { break-inside: avoid; padding: 7px 10px; }
+  .metric-card dd { font-size: 18px; }
+  .cash-flow-chart { max-width: 480px; break-inside: avoid; }
+  .output-section, .tool-method { margin-block-start: 14px; padding-block-start: 8px; }
+  .table-scroll { max-height: none; overflow: visible; }
+  .cash-flow-chart + .cash-flow-details + .table-scroll { margin-block-start: 10px; }
+  .data-table thead { position: static; }
+  .data-table tr { break-inside: avoid; }
+  .data-table td { white-space: normal; overflow-wrap: anywhere; }
+  .data-table :is(td, th) { padding: 4px 6px; }
+}
