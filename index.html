@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.workers.dev http://localhost:* http://127.0.0.1:*; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#181712">
-  <meta name="description" content="THE SPIDER DXB is an open-source UAE real estate broker workspace for local client management, inventory, investment proposals and financial analysis.">
+  <meta name="description" content="THE SPIDER DXB is an open-source UAE real estate broker workspace for local client management, investment analysis, inventory matching and opt-in AI assistance.">
   <meta property="og:title" content="THE SPIDER DXB | UAE Real Estate Broker Workspace">
   <meta property="og:description" content="Manage property deals and create investment proposals with transparent, browser-based calculations.">
   <meta property="og:type" content="website">
@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="./broker-records.css">
   <link rel="stylesheet" href="./broker-proposal.css">
   <link rel="stylesheet" href="./broker-sales.css">
+  <link rel="stylesheet" href="./ai-workspace.css">
+  <link rel="stylesheet" href="./ai-local.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -36,6 +38,10 @@
       <a href="#proposals" data-route="proposals"><span data-icon="document"></span><span data-copy="proposals">Investment proposals</span></a>
       <a href="#performance" data-route="performance"><span data-icon="target"></span><span data-copy="performance">Sales performance</span></a>
       <a href="#data" data-route="data"><span data-icon="database"></span><span data-copy="data">Workspace data</span></a>
+      <p class="nav-caption" data-copy="intelligenceNav">Intelligence</p>
+      <a href="#intelligence" data-route="intelligence"><span data-icon="spark"></span><span data-copy="intelligence">AI assistant</span></a>
+      <a href="#matching" data-route="matching"><span data-icon="match"></span><span data-copy="matching">Property matching</span></a>
+      <a href="#risk" data-route="risk"><span data-icon="shield"></span><span data-copy="risk">Deal risk &amp; comparison</span></a>
       <p class="nav-caption" data-copy="toolNav">Financial tools</p>
       <a href="#investment" data-route="investment"><span data-icon="chart"></span><span data-copy="investment">Investment analysis</span></a>
       <a href="#mortgage" data-route="mortgage"><span data-icon="home"></span><span data-copy="mortgage">Mortgage calculator</span></a>
@@ -46,7 +52,7 @@
     </nav>
     <div class="sidebar-footer">
       <a href="https://github.com/abdomhmoud7866-bit/Real-Estate-Ai-Tools" class="source-link"><span data-icon="code"></span><span data-copy="source">GitHub repository</span><span data-icon="external"></span></a>
-      <p><span class="currency-dot"></span><span data-copy="currency">AED · UAE dirham</span><span class="release-version" dir="ltr">v0.3.0</span></p>
+      <p><span class="currency-dot"></span><span data-copy="currency">AED · UAE dirham</span><span class="release-version" dir="ltr">v0.4.0</span></p>
     </div>
   </aside>
   <div id="print-brand" class="print-brand">
@@ -85,9 +91,9 @@
         <section class="hero" aria-labelledby="hero-title">
           <div class="hero-inner">
             <p class="hero-kicker"><span data-icon="pin"></span><span data-copy="heroKicker">UAE PROPERTY WORKSPACE</span></p>
-            <h2 id="hero-title" data-copy="heroTitle">Prepare your next property proposal.</h2>
-            <p class="hero-description" data-copy="heroDescription">Combine a property, its payment schedule and financing assumptions into one investment proposal.</p>
-            <a class="hero-button" href="#proposals"><span data-copy="heroAction">Create a proposal</span><span data-icon="arrow"></span></a>
+            <h2 id="hero-title" data-copy="heroTitle">Work through your next deal.</h2>
+            <p class="hero-description" data-copy="heroDescription">Compare deal risks on this device, or connect a private AI provider to review assumptions and draft client communications.</p>
+            <a class="hero-button" href="#intelligence"><span data-copy="heroAction">Open AI workspace</span><span data-icon="arrow"></span></a>
           </div>
         </section>
         <section class="snapshot" aria-labelledby="pipeline-title">
@@ -97,6 +103,12 @@
           </div>
           <p id="pipeline-status" class="pipeline-status" role="status"></p>
           <div class="snapshot-grid" id="pipeline-grid"></div>
+        </section>
+        <section class="tool-section" aria-labelledby="intel-tools-heading">
+          <div class="section-heading">
+            <div><h2 id="intel-tools-heading" data-copy="intelligenceNav">Intelligence</h2></div>
+          </div>
+          <div class="tool-link-grid" id="intel-link-grid"></div>
         </section>
         <section class="tool-section" aria-labelledby="broker-tools-heading">
           <div class="section-heading">
@@ -131,6 +143,7 @@
     <a href="#clients" data-route="clients"><span data-icon="users"></span><span data-copy="clients">Clients</span></a>
     <a href="#inventory" data-route="inventory"><span data-icon="building"></span><span data-copy="mobileInventory">Inventory</span></a>
     <a href="#proposals" data-route="proposals"><span data-icon="document"></span><span data-copy="mobileProposals">Proposals</span></a>
+    <a href="#intelligence" data-route="intelligence"><span data-icon="spark"></span><span data-copy="mobileIntelligence">AI</span></a>
   </nav>
 </body>
 </html>

@@ -181,3 +181,6 @@
   .data-table td { white-space: normal; overflow-wrap: anywhere; }
   .data-table :is(td, th) { padding: 4px 6px; }
 }
+
+.finance-ai-handoff { margin-block-start: 14px; }
+@media print { .finance-ai-handoff { display: none; } }

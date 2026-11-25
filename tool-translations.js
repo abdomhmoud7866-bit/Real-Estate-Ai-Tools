@@ -1,4 +1,5 @@
 const en = {
+  aiHandoff: 'Review figures for AI commentary',
   investment: 'Investment analysis',
   investmentDescription: 'Estimate rental yield, operating income and cash flow from your property assumptions.',
   mortgage: 'Mortgage calculator',
@@ -116,6 +117,7 @@ const en = {
 };
 
 const ar = {
+  aiHandoff: 'راجع الأرقام لإضافة تعليق بالذكاء الاصطناعي',
   investment: 'تحليل الاستثمار',
   investmentDescription: 'قدّر عائد الإيجار والدخل التشغيلي والتدفقات النقدية بناءً على افتراضاتك للعقار.',
   mortgage: 'حاسبة التمويل العقاري',

@@ -13,15 +13,16 @@ Review this milestone against two criteria. A user can reproduce a result from t
 - Track monthly targets, won and lost deals, and gross brokerage commission.
 - Keep the static application deployable from a flat ZIP and verify both Arabic and English in browser tests.
 
-## Milestone 3 · Workflow depth
+## Milestone 3 · AI real estate intelligence
 
-- Evaluate opt-in recurring follow-up reminders and lead activity history.
+- Add a bilingual AI workspace with explicit request review and consent, authenticated Worker access, and locally managed conversation history.
+- Keep property matching, deal risk scenarios, calculations, and PDF reporting available offline.
+- Label AI commentary, trace financial results to user assumptions and deterministic formulas, and keep private CRM fields out of automatic handoffs.
+- Validate authorization, data handling, provider behavior, and browser flows with automated tests. Verify any live provider on its deployed Worker using synthetic input.
+
+## Milestone 4 · Workflow depth
+
+- Evaluate opt-in follow-up reminders and lead activity history.
 - Evaluate reusable proposal variants and inventory import for broker teams.
-- Evaluate public UAE property data sources for licensing, coverage, freshness, and source attribution before integration.
-
-## Milestone 4 · Optional AI assistance
-
-- Keep the calculators fully functional as a standalone static app.
-- Offer property analysis and sales assistance only through an explicitly configured backend with server-side credentials and request limits.
-- Ask the user to select what data is shared and distinguish model output from calculations and verified source data.
-- Test authorization, secret handling, output reliability, and privacy before release.
+- Evaluate public UAE property data sources for licensing, coverage, freshness, and attribution before integration.
+- Evaluate per-user authorization and quotas for larger deployments.

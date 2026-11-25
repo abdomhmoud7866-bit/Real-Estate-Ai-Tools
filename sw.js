@@ -1,7 +1,7 @@
 // Bump this version whenever a precached file changes.
 const scope = self.registration.scope;
 const prefix = 'spider-dxb:' + scope + ':';
-const cacheName = prefix + 'v0.3.0-flat';
+const cacheName = prefix + 'v0.4.0-flat';
 const home = new URL('index.html', scope).href;
 const assets = new Set([
   'index.html',
@@ -26,6 +26,16 @@ const assets = new Set([
   'broker-sales.js',
   'broker-sales-translations.js',
   'broker-sales.css',
+  'ai-client.js',
+  'ai-handoff.js',
+  'ai-history.js',
+  'ai-local-model.js',
+  'ai-local-translations.js',
+  'ai-local.css',
+  'ai-local.js',
+  'ai-translations.js',
+  'ai-workspace.css',
+  'ai-workspace.js',
 ].map((path) => new URL(path, scope).href));
 
 self.addEventListener('install', (event) => {

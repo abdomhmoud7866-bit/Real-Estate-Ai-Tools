@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+- Added the English and Arabic AI workspace with real-provider integration for chat, property analysis, consultative coaching, objections, negotiation, marketing, listing, WhatsApp drafts, and investment commentary.
+- Added review and consent for each AI generation, provider connection status, Property Finder character limits, and optional local conversation history with individual and complete deletion.
+- Added deterministic property matching and printable deal comparisons with downside risk scenarios and a numeric-only AI handoff.
+- Added the Cloudflare Worker with authenticated access, exact-origin CORS, bounded requests, and shared usage quotas.
+- Updated the offline application cache and preserved the existing broker database.
+- Added provider integration, Worker security, financial regression, offline, and mobile browser tests. Packaged the flat frontend, complete source and test suite, and isolated Worker.
+
 ## 0.3.0
 
 - Added a local client CRM and property inventory with follow-up dates, lead stages, availability, and handover tracking.

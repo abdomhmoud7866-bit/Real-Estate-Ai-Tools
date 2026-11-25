@@ -1,5 +1,7 @@
 import { investment } from './finance.js';
 import { renderTool } from './tools.js';
+import { renderIntelligence } from './ai-workspace.js';
+import { renderLocalIntelligence } from './ai-local.js';
 import { listRecords, subscribeRecords, workspaceDate } from './broker-store.js';
 import { renderRecords } from './broker-records.js';
 import { renderProposal } from './broker-proposal.js';
@@ -11,9 +13,9 @@ const copy = {
     overview: 'Overview', investment: 'Investment analysis', mortgage: 'Mortgage calculator', payments: 'Payment plans',
     compare: 'Compare properties', resale: 'Resale scenarios', source: 'GitHub repository', currency: 'AED · UAE dirham',
     overviewTitle: 'Broker overview', overviewDescription: 'See which clients need a follow-up and find the tools for your next deal.',
-    heroKicker: 'UAE PROPERTY WORKSPACE', heroTitle: 'Prepare your next property proposal.',
-    heroDescription: 'Combine a property, its payment schedule and financing assumptions into one investment proposal.',
-    heroAction: 'Create a proposal', snapshotTitle: 'Sample investment',
+    heroKicker: 'UAE PROPERTY WORKSPACE', heroTitle: 'Work through your next deal.',
+    heroDescription: 'Compare deal risks on this device, or connect a private AI provider to review assumptions and draft client communications.',
+    heroAction: 'Open AI workspace', snapshotTitle: 'Sample investment',
     snapshotDescription: 'Illustrative figures for exploring the rental yield calculator.',
     seeAssumptions: 'Open yield calculator', purchasePrice: 'Purchase price', grossYield: 'Gross rental yield',
     netYield: 'Net rental yield', annualNet: 'Annual net income',
@@ -46,6 +48,12 @@ const copy = {
     dataDescription: 'Back up, restore or delete the records stored in this browser.',
     commissionDescription: 'Work out referral payments and brokerage and agent shares.',
     updateReady: 'An update is ready. Save any edits before reloading.', reloadApp: 'Reload',
+    intelligenceNav: 'Intelligence', intelligence: 'AI assistant', matching: 'Property matching', risk: 'Deal risk & comparison',
+    mobileIntelligence: 'AI',
+    intelligenceDescription: 'Connect your provider to review assumptions, practice sales conversations and draft content.',
+    matchingDescription: 'Rank local inventory by a client’s budget and preferences on this device.',
+    riskDescription: 'Compare two scenarios under the same downside assumptions and print the results.',
+
 
   },
   ar: {
@@ -53,9 +61,9 @@ const copy = {
     overview: 'نظرة عامة', investment: 'تحليل الاستثمار', mortgage: 'حاسبة التمويل العقاري', payments: 'خطط السداد',
     compare: 'مقارنة العقارات', resale: 'سيناريوهات إعادة البيع', source: 'المستودع على GitHub', currency: 'AED · الدرهم الإماراتي',
     overviewTitle: 'لوحة الوسيط العقاري', overviewDescription: 'اطّلع على العملاء الذين يحتاجون إلى متابعة واعثر على أدوات صفقتك القادمة.',
-    heroKicker: 'مساحة عمل عقارية في الإمارات', heroTitle: 'أعِدّ عرضك العقاري المقبل.',
-    heroDescription: 'اجمع بيانات العقار وجدول سداده وافتراضات التمويل في عرض استثماري واحد.',
-    heroAction: 'أنشئ عرضًا', snapshotTitle: 'مثال على استثمار',
+    heroKicker: 'مساحة عمل عقارية في الإمارات', heroTitle: 'ادرس صفقتك العقارية المقبلة.',
+    heroDescription: 'قارن مخاطر الصفقات على جهازك، أو اتصل بمزوّد ذكاء اصطناعي خاص لمراجعة الافتراضات وصياغة رسائل العملاء.',
+    heroAction: 'افتح مساحة الذكاء الاصطناعي', snapshotTitle: 'مثال على استثمار',
     snapshotDescription: 'أرقام توضيحية لاستكشاف حاسبة عائد الإيجار.',
     seeAssumptions: 'افتح حاسبة العائد', purchasePrice: 'سعر الشراء', grossYield: 'إجمالي عائد الإيجار',
     netYield: 'صافي عائد الإيجار', annualNet: 'صافي الدخل السنوي',
@@ -88,6 +96,12 @@ const copy = {
     dataDescription: 'انسخ سجلات المتصفح احتياطيًا أو استعدها أو احذفها.',
     commissionDescription: 'احسب رسوم الإحالة وحصص شركة الوساطة والوكيل.',
     updateReady: 'يتوفر تحديث. احفظ أي تعديلات قبل إعادة التحميل.', reloadApp: 'إعادة التحميل',
+    intelligenceNav: 'التحليل العقاري', intelligence: 'مساعد الذكاء الاصطناعي', matching: 'مطابقة العقارات', risk: 'مخاطر الصفقات ومقارنتها',
+    mobileIntelligence: 'الذكاء',
+    intelligenceDescription: 'اتصل بالمزوّد لمراجعة الافتراضات والتدرّب على محادثات البيع وصياغة المحتوى.',
+    matchingDescription: 'رتّب عقارات مخزونك على الجهاز وفق ميزانية العميل وتفضيلاته.',
+    riskDescription: 'قارن سيناريوهين في ظل افتراضات سلبية موحّدة واطبع النتائج.',
+
 
   },
 };
@@ -118,15 +132,20 @@ const icons = {
   target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
   database: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
   lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/>',
+  spark: '<path d="M12 2c.7 6.3 3.7 9.3 10 10-6.3.7-9.3 3.7-10 10C11.3 15.7 8.3 12.7 2 12c6.3-.7 9.3-3.7 10-10Z"/>',
+  match: '<path d="M3 9l9-6 9 6v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm5 5 3 3 5-6"/>',
+  shield: '<path d="M12 22c5-2 8-6 8-11V6L12 3 4 6v5c0 5 3 9 8 11Zm0-9V8m0 8h.01"/>',
   print: '<path d="M6 8V3h12v5m0 9h2a1 1 0 0 0 1-1v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a1 1 0 0 0 1 1h2m0-3h12v7H6zm11-3h1"/>',
 };
 
 const financialIcons = { investment: 'chart', mortgage: 'home', payments: 'calendar', compare: 'compare', resale: 'trend', commission: 'wallet' };
 const brokerIcons = { clients: 'users', inventory: 'building', 'custom-plans': 'list', proposals: 'document', performance: 'target', data: 'database' };
-const brokerRoutes = {
+const intelIcons = { intelligence: 'spark', matching: 'match', risk: 'shield' };
+const workspaceRoutes = {
   clients: renderRecords, inventory: renderRecords, data: renderRecords,
   'custom-plans': renderProposal, proposals: renderProposal,
   commission: renderSales, performance: renderSales,
+  intelligence: renderIntelligence, matching: renderLocalIntelligence, risk: renderLocalIntelligence,
 };
 const sample = { price: 1_000_000, rent: 80_000, expenses: 12_000, fees: 4, vacancy: 5 };
 const totals = investment(sample);
@@ -196,6 +215,7 @@ function renderOverview() {
     </article>`).join('');
   renderLinks('#tool-link-grid', financialIcons, strings);
   renderLinks('#broker-link-grid', brokerIcons, strings);
+  renderLinks('#intel-link-grid', intelIcons, strings);
 }
 
 function renderLinks(selector, entries, strings) {
@@ -258,7 +278,7 @@ function applyLanguage() {
 function navigate({ focus = false, refresh = false } = {}) {
   const fragment = location.hash.slice(1);
   if (fragment === 'main-content' && activeRoute) return;
-  const next = Object.hasOwn(financialIcons, fragment) || Object.hasOwn(brokerRoutes, fragment) ? fragment : 'overview';
+  const next = Object.hasOwn(financialIcons, fragment) || Object.hasOwn(workspaceRoutes, fragment) ? fragment : 'overview';
   if (activeRoute === next && !refresh) return;
   routeController?.abort(refresh && activeRoute === next ? 'locale-change' : undefined);
   routeController = new AbortController();
@@ -267,9 +287,9 @@ function navigate({ focus = false, refresh = false } = {}) {
   const strings = copy[language];
   overview.hidden = !isOverview;
   toolView.hidden = isOverview;
-  const printable = next === 'proposals' || (Object.hasOwn(financialIcons, next) && next !== 'commission');
+  const printable = next === 'proposals' || next === 'risk' || (Object.hasOwn(financialIcons, next) && next !== 'commission');
   reportButton.hidden = !printable;
-  document.body.classList.toggle('has-report', printable);
+  document.body.classList.toggle('has-report', printable || next === 'intelligence');
   document.querySelector('#current-page').textContent = strings[next];
   document.querySelectorAll('nav [data-route]').forEach((link) => {
     if (link.dataset.route === next) link.setAttribute('aria-current', 'page');
@@ -279,7 +299,7 @@ function navigate({ focus = false, refresh = false } = {}) {
     toolView.replaceChildren();
     loadPipeline();
   } else {
-    const render = brokerRoutes[next] || renderTool;
+    const render = workspaceRoutes[next] || renderTool;
     toolView.replaceChildren(render(next, language, { signal: routeController.signal }));
   }
   document.title = `THE SPIDER DXB | ${strings[isOverview ? 'overviewTitle' : next]}`;

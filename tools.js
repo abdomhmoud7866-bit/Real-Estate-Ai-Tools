@@ -1,3 +1,4 @@
+import { stageAiContext } from './ai-handoff.js';
 import { cashFlow, investment, mortgage, paymentPlan, resale } from './finance.js';
 import { toolTranslations } from './tool-translations.js';
 
@@ -338,6 +339,28 @@ function renderReportInputs(target, key, values, ctx) {
   target.append(section);
 }
 
+function rentalScenario(values) {
+  const { price, rent, expenses, fees, vacancy } = values;
+  const result = investment(values);
+  return {
+    price, rent, expenses, fees, vacancy,
+    grossYield: result.grossYield, netYield: result.netYield,
+    annualNet: result.net, monthlyNet: result.monthlyNet, acquisitionCost: result.total,
+  };
+}
+
+function addAiHandoff(parent, key, values, ctx) {
+  if (key !== 'investment' && key !== 'compare') return;
+  const link = element('button', 'broker-button secondary finance-ai-handoff', ctx.text.aiHandoff);
+  link.type = 'button';
+  link.addEventListener('click', () => {
+    const scenarios = key === 'investment' ? [values] : properties.map(([prefix, , defaults]) => prefixedValues(values, prefix, defaults));
+    stageAiContext(key === 'compare' ? 'comparison' : 'report', scenarios.map(rentalScenario));
+    location.hash = 'intelligence';
+  });
+  parent.append(link);
+}
+
 function reportError(key, values, ctx) {
   if (values.downPayment > values.price) return ctx.text.downPaymentLimit;
   if (key === 'payments') {
@@ -429,6 +452,7 @@ export function renderTool(key, language = 'en') {
     try {
       renderReportInputs(content, key, values, ctx);
       renderResults(key, content, values, ctx);
+      addAiHandoff(content, key, values, ctx);
     } catch (error) {
       if (!(error instanceof RangeError)) throw error;
       fail(text.invalidCalc);
@@ -448,6 +472,8 @@ export function renderTool(key, language = 'en') {
     ctx.values[name] = value;
     event.target.removeAttribute('aria-invalid');
     form.dataset.valid = 'false';
+    const handoff = output.querySelector('.finance-ai-handoff');
+    if (handoff) handoff.disabled = true;
     status.textContent = text.changed;
   });
   calculate();

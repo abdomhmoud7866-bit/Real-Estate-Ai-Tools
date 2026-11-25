@@ -1,0 +1,74 @@
+.local-intelligence .broker-fields { margin-block-start: 12px; }
+.local-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  width: fit-content;
+  max-width: 100%;
+  margin-block-start: 8px;
+  font-weight: 650;
+  font-size: 14px;
+  cursor: pointer;
+}
+.local-check input { inline-size: 18px; block-size: 18px; accent-color: var(--gold); flex: none; }
+.local-help { margin: 0; color: var(--muted); font-size: 13px; }
+.local-match-list {
+  display: grid;
+  gap: 10px;
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+}
+.local-match { padding: 12px; border: 1px solid var(--line); background: var(--page); border-radius: 10px; }
+.local-match :is(h3, p) { margin: 0; overflow-wrap: anywhere; }
+.local-match-figures { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 12px; font-size: 13px; }
+.local-match-figures strong { font-size: 15px; }
+.local-match p + p { margin-block-start: 7px; }
+.local-badge { color: var(--text); background: var(--surface); border: 1px solid var(--line); padding: 0 6px; border-radius: 10px; font-size: 12px; }
+.local-score { color: var(--gold); font-size: 13px; font-weight: 650; margin-block-start: 5px; }
+.local-match-details { margin: 3px 0 0; padding-inline-start: 18px; color: var(--muted); font-size: 12px; }
+.local-method { margin-block-start: 12px; }
+.local-method summary { cursor: pointer; color: var(--gold); font-weight: 650; }
+.local-method p { margin-block-start: 8px; }
+.local-deal-grid, .local-summary-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.local-deal-grid:has(fieldset:nth-child(2):not([hidden])), .local-summary-grid:has(section:nth-child(2)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.local-fieldset { margin: 0; }
+.local-fieldset legend { font: 500 19px/1.2 var(--serif); padding-inline: 7px; }
+.local-risk-form > fieldset { margin-block-start: 13px; }
+.local-risk-form > .local-check { margin-block: 0 8px; }
+.local-risk-report { margin-block-start: 22px; }
+.local-report-body:not(:empty) { display: grid; gap: 12px; margin-block-start: 12px; }
+.local-risk-table table { min-width: 500px; }
+.local-risk-table th { max-width: 175px; }
+.local-deal-summary { padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--page); }
+.local-deal-summary h4 { margin: 5px 0; font-size: 13px; }
+.local-assumptions, .local-signals { margin: 0; }
+.local-assumptions div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3px 12px; padding: 4px 0; }
+.local-assumptions dt, .local-signals dt { font-weight: 600; }
+.local-assumptions dd, .local-signals dd { margin: 0; overflow-wrap: anywhere; }
+.local-assumptions { font-size: 13px; }
+.local-signals { padding-block-start: 7px; margin-block-start: 6px; border-block-start: 1px solid var(--line); }
+.local-signals div { padding-block: 4px; font-size: 13px; }
+.local-signals dt { color: var(--gold); }
+.local-risk-notes { display: grid; gap: 5px; font-size: 13px; color: var(--muted); }
+.local-risk-notes p { margin: 0; }
+.local-risk-handoff { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.local-risk-handoff .local-help { flex: 1 1 220px; }
+@media (max-width: 720px) {
+  .local-deal-grid:has(fieldset:nth-child(2):not([hidden])), .local-summary-grid:has(section:nth-child(2)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media print {
+  .local-intelligence .broker-heading,
+  .local-risk-form,
+  .local-risk-handoff,
+  .local-live { display: none !important; }
+  .local-risk-report { margin: 0; padding: 0; border: 0; }
+  .local-risk-table table { min-width: 0; }
+  .local-summary-grid:has(section:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .local-deal-summary { break-inside: avoid; }
+}
