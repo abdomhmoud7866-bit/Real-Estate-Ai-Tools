@@ -1,0 +1,106 @@
+.records-screen .broker-notice { margin-block-end: 12px; }
+.records-screen .broker-notice:empty { padding: 0; margin: 0; border: 0; }
+.records-editor { margin-block-end: 18px; }
+.records-form h2, .records-directory-head h2, .records-data-card h2 { font: 500 1.45rem/1.2 var(--serif); }
+.records-fields { margin-block: 16px; }
+.record-field-wide { grid-column: 1 / -1; }
+.records-screen input[type="date"] { min-width: 0; }
+.records-file-field input[type="file"] { max-width: 100%; }
+.records-field-hint, .records-summary, .record-developer { color: var(--muted); font-size: .86rem; }
+.records-directory-head, .record-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px 14px;
+}
+.records-directory-head { align-items: center; flex-wrap: wrap; }
+.records-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 15rem);
+  gap: 12px;
+  margin-block: 14px 10px;
+}
+.records-summary { min-height: 1.5em; margin-block: 8px; }
+.records-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 27rem), 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.records-list:not(:empty) { margin-block-end: 14px; }
+.record-item {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--page);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+.record-item h3 { font-size: 1rem; }
+.record-item-head > div { min-width: 0; }
+.record-status {
+  color: var(--gold);
+  background: var(--tile);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: .78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.record-status:is([data-state="won"], [data-state="available"]) { color: #286248; background: #e8f0e7; border-color: #ccdfd0; }
+:root[data-theme="dark"] .record-status:is([data-state="won"], [data-state="available"]) { color: #b6dfc3; background: #25372c; border-color: #3a5547; }
+.record-status:is([data-state="lost"], [data-state="sold"]) { color: var(--muted); background: var(--surface); }
+.record-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 14px;
+  margin: 10px 0 0;
+}
+.record-details dt { color: var(--muted); font-size: .79rem; }
+.record-details dd { margin: 0; font-size: .91rem; }
+.record-detail-long { grid-column: 1 / -1; }
+.record-detail-long dd { white-space: pre-wrap; }
+.record-followup-flag { display: block; color: var(--gold); font-size: .78rem; font-weight: 700; }
+.record-actions { margin-block-start: 10px; }
+.records-data-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+  gap: 14px;
+}
+.records-data-card { display: grid; justify-items: start; gap: 12px; }
+.records-data-card p { color: var(--muted); }
+.records-data-card .records-privacy {
+  color: var(--text);
+  background: var(--tile);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: .86rem;
+}
+.records-confirm {
+  width: 100%;
+  padding: 11px;
+  margin-block-start: 10px;
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--gold);
+  background: var(--surface);
+  border-radius: 8px;
+}
+.records-confirm .broker-actions { margin-block-start: 9px; }
+.records-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 9px 0 0;
+  font-size: .87rem;
+}
+.records-counts dt { color: var(--muted); }
+.records-counts dd { margin: 0; font-weight: 650; }
+@media (max-width: 520px) {
+  .records-filters { grid-template-columns: minmax(0, 1fr); }
+  .record-item { padding: 11px; }
+}

@@ -8,8 +8,16 @@ The maintainers investigate reports against the current default branch. Coordina
 
 ## Browser data
 
-The static workspace runs financial calculations in your browser. Calculator values are used in memory. Language and theme preferences are stored locally, and the service worker caches public application assets for offline use. The app has no application backend, telemetry, client records, or AI credentials. GitHub Pages may process standard request metadata when serving the application's public files under GitHub's privacy policy.
+The workspace stores CRM records, property inventory, payment plans, and sales targets in IndexedDB for this deployment and browser profile. Language and theme preferences are stored locally, and the service worker caches public application files for offline use. The app has no application backend, automatic sync, analytics, or AI credentials. GitHub Pages may process standard request metadata when serving public files under GitHub's privacy policy.
 
-Clear site data in your browser to remove cached assets and saved workspace preferences. Files exported or printed by the browser are separate copies managed by the person who saved them.
+Anyone using the same browser profile can open its local workspace. Deploy code you trust on the same web origin, since browser storage is protected by origin. Use a trusted device and profile. Private browsing, restricted storage, clearing site data, or changing browser profiles or deployment addresses can interrupt access to local records.
 
-Any future AI integration must keep provider credentials on the server and define which inputs leave the device before enabling requests. Client workflows must define storage, deletion, export, and data sharing before accepting personal information.
+## Backups, deletion, and sharing
+
+- Export a versioned JSON backup from Workspace data. Keep the file private because it contains plaintext records, which can include client information. Store backups in a protected location outside the repository.
+- Import accepts a validated backup after you confirm replacement. The workspace applies a restore as one IndexedDB transaction. Delete uses a separate confirmation to erase all broker records from the current workspace.
+- Broker record deletion and browser site-data deletion apply to this local workspace. Remove any copies in downloaded backups, PDFs, and shared messages separately.
+- Proposal PDFs include selected property and investment inputs. WhatsApp summaries contain selected financial figures. The proposal workflow excludes CRM records. Review the share preview, and leave personal information out of property and plan labels.
+- Opening WhatsApp passes the reviewed summary to that service to prefill a message. You choose the recipient and send from WhatsApp.
+
+Any future AI integration must hold provider credentials on the server and specify what information leaves the device before enabling requests.

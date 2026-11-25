@@ -1,7 +1,7 @@
 // Bump this version whenever a precached file changes.
 const scope = self.registration.scope;
 const prefix = 'spider-dxb:' + scope + ':';
-const cacheName = prefix + 'v2-flat';
+const cacheName = prefix + 'v0.3.0-flat';
 const home = new URL('index.html', scope).href;
 const assets = new Set([
   'index.html',
@@ -13,12 +13,28 @@ const assets = new Set([
   'tools.js',
   'tool-translations.js',
   'finance.js',
+  'broker.css',
+  'broker-store.js',
+  'broker-records.js',
+  'broker-record-translations.js',
+  'broker-records.css',
+  'broker-plans.js',
+  'broker-proposal.js',
+  'broker-proposal-translations.js',
+  'broker-proposal.css',
+  'broker-metrics.js',
+  'broker-sales.js',
+  'broker-sales-translations.js',
+  'broker-sales.css',
 ].map((path) => new URL(path, scope).href));
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(cacheName).then((cache) => (
-    cache.addAll([...assets].map((url) => new Request(url, { cache: 'reload' })))
-  )));
+  event.waitUntil((async () => {
+    const cache = await caches.open(cacheName);
+    await cache.addAll([...assets].map((url) => new Request(url, { cache: 'reload' })));
+    // Activate only after the entire version is available offline.
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', (event) => {

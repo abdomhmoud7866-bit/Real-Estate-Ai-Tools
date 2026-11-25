@@ -1,16 +1,20 @@
 import { investment } from './finance.js';
 import { renderTool } from './tools.js';
+import { listRecords, subscribeRecords, workspaceDate } from './broker-store.js';
+import { renderRecords } from './broker-records.js';
+import { renderProposal } from './broker-proposal.js';
+import { renderSales } from './broker-sales.js';
 
 const copy = {
   en: {
     skip: 'Skip to content', brandLine: 'REAL ESTATE INTELLIGENCE', workspace: 'Workspace', toolNav: 'Financial tools',
     overview: 'Overview', investment: 'Investment analysis', mortgage: 'Mortgage calculator', payments: 'Payment plans',
     compare: 'Compare properties', resale: 'Resale scenarios', source: 'GitHub repository', currency: 'AED · UAE dirham',
-    overviewTitle: 'Investment overview', overviewDescription: 'Analyze UAE property deals, from purchase costs to exit returns.',
-    sample: 'Illustrative figures', heroKicker: 'UAE PROPERTY WORKSPACE', heroTitle: 'Underwrite your next property.',
-    heroDescription: 'Estimate returns, model financing and compare payment schedules before committing to a deal.',
-    heroAction: 'Analyze an investment', snapshotTitle: 'Sample investment',
-    snapshotDescription: 'A starting point for exploring the rental yield calculator.',
+    overviewTitle: 'Broker overview', overviewDescription: 'See which clients need a follow-up and find the tools for your next deal.',
+    heroKicker: 'UAE PROPERTY WORKSPACE', heroTitle: 'Prepare your next property proposal.',
+    heroDescription: 'Combine a property, its payment schedule and financing assumptions into one investment proposal.',
+    heroAction: 'Create a proposal', snapshotTitle: 'Sample investment',
+    snapshotDescription: 'Illustrative figures for exploring the rental yield calculator.',
     seeAssumptions: 'Open yield calculator', purchasePrice: 'Purchase price', grossYield: 'Gross rental yield',
     netYield: 'Net rental yield', annualNet: 'Annual net income',
     purchaseHint: 'Before acquisition costs', grossHint: 'Before vacancy and expenses',
@@ -24,16 +28,35 @@ const copy = {
     footerNote: 'Estimates are calculated in your browser. Verify costs and contract terms independently.',
     report: 'Print report', printTitle: 'Property investment report', openMenu: 'Open navigation', closeMenu: 'Close navigation',
     darkMode: 'Dark mode', switchLanguage: 'Switch to Arabic',
+    clients: 'Clients', inventory: 'Property inventory', 'custom-plans': 'Custom plans', proposals: 'Investment proposals',
+    performance: 'Sales performance', data: 'Workspace data', commission: 'Commission calculator',
+    mobileInventory: 'Inventory', mobileProposals: 'Proposals', quickNav: 'Quick navigation', localWorkspace: 'Data stays on this device',
+    pipelineTitle: 'Pipeline at a glance', pipelineDescription: 'Counts from your local client and property records.',
+    viewPerformance: 'View sales performance', brokerToolsTitle: 'Broker workspace',
+    activeLeads: 'Active leads', activeHint: 'Excludes won and lost deals',
+    followUps: 'Follow-ups due', followUpHint: 'Scheduled for today or earlier',
+    availableUnits: 'Available properties', availableHint: 'Marked available in inventory',
+    savedPlans: 'Saved plans', savedPlanHint: 'Custom developer schedules',
+    loadingPipeline: 'Loading local records…', pipelineUnavailable: 'Local records are unavailable. Check your browser storage settings.',
+    clientsDescription: 'Track lead stages, requirements and follow-up dates.',
+    inventoryDescription: 'Manage projects and units, with their specifications and availability.',
+    'custom-plansDescription': 'Build installment schedules with specific dates and milestone amounts.',
+    proposalsDescription: 'Combine property, yield and financing assumptions in a branded report.',
+    performanceDescription: 'Review closed deals, conversion and progress against targets.',
+    dataDescription: 'Back up, restore or delete the records stored in this browser.',
+    commissionDescription: 'Work out referral payments and brokerage and agent shares.',
+    updateReady: 'An update is ready. Save any edits before reloading.', reloadApp: 'Reload',
+
   },
   ar: {
     skip: 'انتقل إلى المحتوى', brandLine: 'تحليل الاستثمارات العقارية', workspace: 'مساحة العمل', toolNav: 'الأدوات المالية',
     overview: 'نظرة عامة', investment: 'تحليل الاستثمار', mortgage: 'حاسبة التمويل العقاري', payments: 'خطط السداد',
     compare: 'مقارنة العقارات', resale: 'سيناريوهات إعادة البيع', source: 'المستودع على GitHub', currency: 'AED · الدرهم الإماراتي',
-    overviewTitle: 'نظرة عامة على الاستثمار', overviewDescription: 'حلّل الصفقات العقارية في الإمارات من تكاليف الشراء إلى عوائد البيع.',
-    sample: 'أرقام توضيحية', heroKicker: 'مساحة عمل للاستثمار العقاري في الإمارات', heroTitle: 'قيّم عقارك الاستثماري المقبل.',
-    heroDescription: 'قدّر العوائد، وادرس خيارات التمويل، وقارن جداول السداد قبل الالتزام بالصفقة.',
-    heroAction: 'حلّل استثمارًا', snapshotTitle: 'مثال على استثمار',
-    snapshotDescription: 'نقطة بداية لاستكشاف حاسبة عائد الإيجار.',
+    overviewTitle: 'لوحة الوسيط العقاري', overviewDescription: 'اطّلع على العملاء الذين يحتاجون إلى متابعة واعثر على أدوات صفقتك القادمة.',
+    heroKicker: 'مساحة عمل عقارية في الإمارات', heroTitle: 'أعِدّ عرضك العقاري المقبل.',
+    heroDescription: 'اجمع بيانات العقار وجدول سداده وافتراضات التمويل في عرض استثماري واحد.',
+    heroAction: 'أنشئ عرضًا', snapshotTitle: 'مثال على استثمار',
+    snapshotDescription: 'أرقام توضيحية لاستكشاف حاسبة عائد الإيجار.',
     seeAssumptions: 'افتح حاسبة العائد', purchasePrice: 'سعر الشراء', grossYield: 'إجمالي عائد الإيجار',
     netYield: 'صافي عائد الإيجار', annualNet: 'صافي الدخل السنوي',
     purchaseHint: 'قبل تكاليف الاستحواذ', grossHint: 'قبل احتساب الشغور والمصاريف',
@@ -47,6 +70,25 @@ const copy = {
     footerNote: 'يحسب متصفحك التقديرات محليًا. تحقّق من التكاليف وشروط العقد بصورة مستقلة.',
     report: 'طباعة التقرير', printTitle: 'تقرير الاستثمار العقاري', openMenu: 'فتح قائمة التنقل', closeMenu: 'إغلاق قائمة التنقل',
     darkMode: 'الوضع الداكن', switchLanguage: 'التبديل إلى الإنجليزية',
+    clients: 'العملاء', inventory: 'المخزون العقاري', 'custom-plans': 'خطط سداد مخصصة', proposals: 'العروض الاستثمارية',
+    performance: 'أداء المبيعات', data: 'بيانات مساحة العمل', commission: 'حاسبة العمولة',
+    mobileInventory: 'العقارات', mobileProposals: 'العروض', quickNav: 'التنقل السريع', localWorkspace: 'تبقى البيانات على هذا الجهاز',
+    pipelineTitle: 'لمحة عن الصفقات', pipelineDescription: 'الإجماليات من سجلات العملاء والعقارات المحلية.',
+    viewPerformance: 'اعرض أداء المبيعات', brokerToolsTitle: 'مساحة عمل الوسيط',
+    activeLeads: 'العملاء المحتملون النشطون', activeHint: 'باستثناء الصفقات الناجحة والمفقودة',
+    followUps: 'المتابعات المستحقة', followUpHint: 'المجدولة لليوم أو لتاريخ سابق',
+    availableUnits: 'العقارات المتاحة', availableHint: 'المسجّلة كمتاحة في المخزون العقاري',
+    savedPlans: 'الخطط المحفوظة', savedPlanHint: 'جداول سداد مخصصة للمطوّرين',
+    loadingPipeline: 'جارٍ تحميل السجلات المحلية…', pipelineUnavailable: 'السجلات المحلية غير متاحة. تحقّق من إعدادات التخزين في المتصفح.',
+    clientsDescription: 'تابع مراحل العملاء المحتملين ومتطلباتهم ومواعيد المتابعة.',
+    inventoryDescription: 'أدِر المشاريع والوحدات وبياناتها وحالة توفرها.',
+    'custom-plansDescription': 'أنشئ جداول أقساط بتواريخ ومبالغ محددة لمراحل المشروع.',
+    proposalsDescription: 'اجمع بيانات العقار والعائد والتمويل في تقرير يحمل هوية المنصة.',
+    performanceDescription: 'راجع الصفقات المغلقة ونسبة التحويل والتقدّم نحو الأهداف.',
+    dataDescription: 'انسخ سجلات المتصفح احتياطيًا أو استعدها أو احذفها.',
+    commissionDescription: 'احسب رسوم الإحالة وحصص شركة الوساطة والوكيل.',
+    updateReady: 'يتوفر تحديث. احفظ أي تعديلات قبل إعادة التحميل.', reloadApp: 'إعادة التحميل',
+
   },
 };
 
@@ -69,10 +111,23 @@ const icons = {
   chevron: '<path d="m9 6 6 6-6 6"/>',
   wallet: '<path d="M3 7a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm0 1h17m0 3h-5a2 2 0 0 0 0 4h5m-5-2h.1"/>',
   percent: '<path d="M5 19 19 5"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>',
+  users: '<circle cx="9" cy="7" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2m1-16a3 3 0 0 1 0 6m2 4a4 4 0 0 1 3 4v2"/>',
+  building: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h.01M15 7h.01M9 11h.01M15 11h.01M10 21v-5h4v5"/>',
+  list: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5M8 16h8"/>',
+  document: '<path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Zm8 0v5h5M8 12h8m-8 4h5"/>',
+  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  database: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/>',
   print: '<path d="M6 8V3h12v5m0 9h2a1 1 0 0 0 1-1v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a1 1 0 0 0 1 1h2m0-3h12v7H6zm11-3h1"/>',
 };
 
-const toolIcons = { investment: 'chart', mortgage: 'home', payments: 'calendar', compare: 'compare', resale: 'trend' };
+const financialIcons = { investment: 'chart', mortgage: 'home', payments: 'calendar', compare: 'compare', resale: 'trend', commission: 'wallet' };
+const brokerIcons = { clients: 'users', inventory: 'building', 'custom-plans': 'list', proposals: 'document', performance: 'target', data: 'database' };
+const brokerRoutes = {
+  clients: renderRecords, inventory: renderRecords, data: renderRecords,
+  'custom-plans': renderProposal, proposals: renderProposal,
+  commission: renderSales, performance: renderSales,
+};
 const sample = { price: 1_000_000, rent: 80_000, expenses: 12_000, fees: 4, vacancy: 5 };
 const totals = investment(sample);
 const overview = document.querySelector('#overview');
@@ -80,6 +135,7 @@ const toolView = document.querySelector('#tool-view');
 const main = document.querySelector('#main-content');
 const sidebar = document.querySelector('#sidebar');
 const primaryNav = document.querySelector('#primary-nav');
+const mobileNav = document.querySelector('#mobile-nav');
 const menuButton = document.querySelector('#menu-toggle');
 const languageButton = document.querySelector('#language-toggle');
 const themeButton = document.querySelector('#theme-toggle');
@@ -89,6 +145,8 @@ const mobile = matchMedia('(max-width: 760px)');
 let language = preference('language') === 'ar' ? 'ar' : 'en';
 let theme = preference('theme');
 let activeRoute;
+let routeController;
+let pipelineRequest = 0;
 
 function preference(key, value) {
   try {
@@ -136,12 +194,48 @@ function renderOverview() {
       <p class="snapshot-value"><bdi>${value}</bdi>${currency ? `<small>${currency}</small>` : ''}</p>
       <p class="snapshot-hint">${strings[hint]}</p>
     </article>`).join('');
-  document.querySelector('#tool-link-grid').innerHTML = Object.entries(toolIcons).map(([key, glyph]) => `
+  renderLinks('#tool-link-grid', financialIcons, strings);
+  renderLinks('#broker-link-grid', brokerIcons, strings);
+}
+
+function renderLinks(selector, entries, strings) {
+  document.querySelector(selector).innerHTML = Object.entries(entries).map(([key, glyph]) => `
     <a class="tool-link" href="#${key}">
       <span class="tile-icon">${icon(glyph)}</span>
       <div><h3>${strings[key]}</h3><p>${strings[key + 'Description']}</p></div>
       <span class="tool-arrow">${icon('arrow')}</span>
     </a>`).join('');
+}
+
+async function loadPipeline() {
+  const request = ++pipelineRequest;
+  const strings = copy[language];
+  const grid = document.querySelector('#pipeline-grid');
+  const status = document.querySelector('#pipeline-status');
+  status.textContent = strings.loadingPipeline;
+  grid.replaceChildren();
+  try {
+    const [clients, properties, plans] = await Promise.all(['clients', 'properties', 'plans'].map(listRecords));
+    if (request !== pipelineRequest || activeRoute !== 'overview') return;
+    const today = workspaceDate();
+    const active = clients.filter((client) => !['won', 'lost'].includes(client.stage));
+    const values = [
+      ['activeLeads', 'activeHint', 'users', active.length],
+      ['followUps', 'followUpHint', 'calendar', active.filter((client) => client.followUp && client.followUp <= today).length],
+      ['availableUnits', 'availableHint', 'building', properties.filter((property) => property.availability === 'available').length],
+      ['savedPlans', 'savedPlanHint', 'list', plans.length],
+    ];
+    const number = new Intl.NumberFormat(language === 'ar' ? 'ar-AE' : 'en-AE');
+    status.textContent = '';
+    grid.innerHTML = values.map(([label, hint, glyph, count]) => `
+      <article class="snapshot-card">
+        <div class="snapshot-card-heading"><h3>${strings[label]}</h3><span class="tile-icon">${icon(glyph)}</span></div>
+        <p class="snapshot-value"><bdi>${number.format(count)}</bdi></p>
+        <p class="snapshot-hint">${strings[hint]}</p>
+      </article>`).join('');
+  } catch {
+    if (request === pipelineRequest && activeRoute === 'overview') status.textContent = strings.pipelineUnavailable;
+  }
 }
 
 function applyLanguage() {
@@ -150,6 +244,7 @@ function applyLanguage() {
   document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   document.querySelectorAll('[data-copy]').forEach((node) => { node.textContent = strings[node.dataset.copy]; });
   primaryNav.setAttribute('aria-label', strings.workspace);
+  mobileNav.setAttribute('aria-label', strings.quickNav);
   languageButton.title = strings.switchLanguage;
   const languageLabel = document.querySelector('#language-label');
   languageLabel.lang = language === 'ar' ? 'en' : 'ar';
@@ -163,25 +258,35 @@ function applyLanguage() {
 function navigate({ focus = false, refresh = false } = {}) {
   const fragment = location.hash.slice(1);
   if (fragment === 'main-content' && activeRoute) return;
-  const next = Object.hasOwn(toolIcons, fragment) ? fragment : 'overview';
+  const next = Object.hasOwn(financialIcons, fragment) || Object.hasOwn(brokerRoutes, fragment) ? fragment : 'overview';
   if (activeRoute === next && !refresh) return;
+  routeController?.abort(refresh && activeRoute === next ? 'locale-change' : undefined);
+  routeController = new AbortController();
   activeRoute = next;
   const isOverview = next === 'overview';
   const strings = copy[language];
   overview.hidden = !isOverview;
   toolView.hidden = isOverview;
-  reportButton.hidden = isOverview;
+  const printable = next === 'proposals' || (Object.hasOwn(financialIcons, next) && next !== 'commission');
+  reportButton.hidden = !printable;
+  document.body.classList.toggle('has-report', printable);
   document.querySelector('#current-page').textContent = strings[next];
-  primaryNav.querySelectorAll('[data-route]').forEach((link) => {
+  document.querySelectorAll('nav [data-route]').forEach((link) => {
     if (link.dataset.route === next) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
-  if (!isOverview) toolView.replaceChildren(renderTool(next, language));
-  else toolView.replaceChildren();
+  if (isOverview) {
+    toolView.replaceChildren();
+    loadPipeline();
+  } else {
+    const render = brokerRoutes[next] || renderTool;
+    toolView.replaceChildren(render(next, language, { signal: routeController.signal }));
+  }
   document.title = `THE SPIDER DXB | ${strings[isOverview ? 'overviewTitle' : next]}`;
   setMenu(false);
   if (focus) {
-    const heading = main.querySelector(isOverview ? '#overview-title' : '#tool-title');
+    const heading = (isOverview ? overview : toolView).querySelector('h1');
+    if (heading) heading.tabIndex = -1;
     window.scrollTo(0, 0);
     (heading || main).focus({ preventScroll: true });
   }
@@ -195,7 +300,10 @@ document.querySelector('.skip-link').addEventListener('click', (event) => {
 menuButton.addEventListener('click', () => {
   const open = menuButton.getAttribute('aria-expanded') === 'false';
   setMenu(open);
-  if (open) primaryNav.querySelector('[aria-current]').focus();
+  if (open) (primaryNav.querySelector('[aria-current]') || primaryNav.querySelector('a')).focus();
+});
+sidebar.addEventListener('focusout', (event) => {
+  if (mobile.matches && event.relatedTarget && !sidebar.contains(event.relatedTarget)) setMenu(false);
 });
 sidebar.addEventListener('click', (event) => {
   if (mobile.matches && event.target.closest('a[href^="#"]')?.hash === location.hash) setMenu(false, true);
@@ -228,12 +336,20 @@ reportButton.addEventListener('click', () => {
   if (form.dataset.valid === 'true') window.print();
 });
 window.addEventListener('hashchange', () => navigate({ focus: true }));
+subscribeRecords(() => {
+  if (activeRoute === 'overview') loadPipeline();
+});
 
 applyTheme();
 applyLanguage();
 navigate();
 if ('serviceWorker' in navigator && window.isSecureContext) {
-  navigator.serviceWorker.register(new URL('./sw.js', import.meta.url)).catch((error) => {
+  const hadController = Boolean(navigator.serviceWorker.controller);
+  if (hadController) navigator.serviceWorker.addEventListener('controllerchange', () => {
+    document.querySelector('#update-notice').hidden = false;
+  });
+  document.querySelector('#reload-app').addEventListener('click', () => location.reload());
+  navigator.serviceWorker.register(new URL('./sw.js', import.meta.url), { updateViaCache: 'none' }).catch((error) => {
     console.warn('Offline installation failed.', error);
   });
 }

@@ -1,0 +1,116 @@
+.broker-screen { min-width: 0; }
+.broker-heading { margin-block-end: 22px; }
+.broker-heading h1, h1.broker-heading {
+  font: 500 clamp(33px, 3.8vw, 49px)/1.12 var(--serif);
+  letter-spacing: -.045em;
+}
+:root[dir="rtl"] .broker-heading h1, :root[dir="rtl"] h1.broker-heading { letter-spacing: normal; }
+.broker-heading p { margin-block-start: 6px; color: var(--muted); }
+.broker-card {
+  min-width: 0;
+  padding: clamp(14px, 2.1vw, 24px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.broker-card h2 {
+  font: 500 clamp(19px, 2.1vw, 25px)/1.2 var(--serif);
+  margin-block-end: 10px;
+}
+.broker-card h3 { font-size: 15px; }
+.broker-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: 16px;
+}
+.broker-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.broker-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; font-size: 13px; font-weight: 650; }
+.broker-field small { color: var(--muted); font-weight: normal; }
+.broker-field:has(textarea), .broker-field-full { grid-column: 1 / -1; }
+.broker-screen :is(input:not([type="checkbox"]):not([type="radio"]), textarea, select) {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--page);
+  color: var(--text);
+  font: inherit;
+  font-weight: 450;
+}
+.broker-screen textarea { resize: vertical; }
+.broker-screen input[type="date"], .broker-screen input[type="month"] { -webkit-appearance: none; appearance: none; }
+.broker-screen fieldset { min-width: 0; }
+.broker-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-block-start: 14px; }
+.broker-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 13px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 700 13px/1.35 system-ui, sans-serif;
+  text-align: center;
+}
+.broker-button:hover { background: #f6d6a1; color: var(--accent-ink); }
+.broker-button.secondary { background: var(--surface); color: var(--text); border-color: var(--line); }
+.broker-button.secondary:hover { background: var(--tile); border-color: var(--gold); }
+.broker-button.danger { background: var(--surface); color: var(--error-text); border-color: var(--error-line); }
+.broker-button.danger:hover { background: var(--error-bg); }
+.broker-button:disabled { opacity: .65; cursor: default; }
+:root { --error-bg: #fff6f4; --error-text: #932f29; --error-line: #c67a71; }
+:root[data-theme="dark"] { --error-bg: #392522; --error-text: #ffc0b8; --error-line: #9c554e; }
+.broker-notice, .broker-error, .broker-empty {
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.broker-notice, .broker-empty {
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.broker-error { color: var(--error-text); font-weight: 650; }
+.broker-error:empty { display: none; }
+.broker-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+.broker-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.broker-table :is(th, td) {
+  border-block-end: 1px solid var(--line);
+  text-align: start;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.broker-table thead { background: var(--tile); }
+.broker-table th { font-weight: 650; }
+.broker-table tr:last-child td, .broker-table tbody tr:last-child th { border-block-end: 0; }
+.broker-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+.broker-metric { min-width: 0; background: var(--page); border: 1px solid var(--line); border-radius: 9px; padding: 11px; }
+.broker-metric dt { color: var(--muted); font-size: 12px; font-weight: 650; }
+.broker-metric dd { margin: 3px 0 0; font: 600 clamp(17px, 2vw, 25px)/1.15 var(--serif); overflow-wrap: anywhere; }
+@media (max-width: 1040px) and (min-width: 761px), (max-width: 650px) {
+  .broker-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 420px) {
+  .broker-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 345px) {
+  .broker-fields { grid-template-columns: minmax(0, 1fr); }
+}
+@media print {
+  .broker-card { background: white; }
+  .broker-button { display: none; }
+  .broker-table-wrap { overflow: visible; }
+  .broker-table thead { display: table-header-group; }
+  .broker-table tr { break-inside: avoid; }
+}

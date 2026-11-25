@@ -1,0 +1,234 @@
+.plan-layout,
+.proposal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.proposal-layout {
+  grid-template-columns: minmax(265px, .88fr) minmax(0, 1.35fr);
+}
+.proposal-layout:has(.proposal-report[hidden]) {
+  grid-template-columns: minmax(0, 700px);
+}
+.plan-editor,
+.plan-library,
+.proposal-input,
+.proposal-report {
+  min-inline-size: 0;
+}
+.plan-editor > h3 {
+  margin-block: 18px 8px;
+}
+.installment-list {
+  display: grid;
+  gap: 9px;
+}
+.installment-row,
+.proposal-fieldset {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 11px 14px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.installment-row legend,
+.proposal-fieldset legend {
+  padding-inline: 6px;
+  font-weight: 650;
+}
+.installment-row > button {
+  margin-block-start: 9px;
+}
+.plan-summary {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-block: 12px;
+}
+.plan-editor .broker-actions {
+  margin-block-start: 10px;
+}
+.plan-saved-entry {
+  padding-block: 12px;
+  border-block-end: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.plan-saved-entry:first-child {
+  padding-block-start: 0;
+}
+.plan-saved-entry:last-child {
+  border-block-end: 0;
+  padding-block-end: 0;
+}
+.plan-saved-entry h3 {
+  margin: 0 0 4px;
+}
+.plan-saved-entry .broker-actions {
+  margin-block-start: 8px;
+}
+.proposal-muted,
+.proposal-method,
+.proposal-status {
+  color: var(--muted);
+  font-size: .875rem;
+}
+.proposal-status:not(:empty),
+.proposal-method {
+  margin-block-start: 9px;
+}
+.proposal-fieldset {
+  margin-block: 12px;
+}
+.proposal-check {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  min-block-size: 36px;
+}
+.proposal-check input[type="checkbox"] {
+  inline-size: auto;
+  block-size: auto;
+  padding: 0;
+  min-block-size: 0;
+  min-inline-size: 0;
+  flex: none;
+  accent-color: var(--gold);
+}
+.proposal-loan-fields {
+  margin-block-start: 6px;
+}
+.proposal-input .broker-notice a {
+  color: var(--gold);
+  text-decoration: underline;
+}
+.proposal-report-header {
+  padding: 15px;
+  border-radius: 10px;
+  background: var(--tile);
+  border: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.proposal-report-header h2 {
+  margin: 0;
+  font: 500 clamp(20px, 4vw, 32px)/1.18 var(--serif);
+}
+.proposal-report-header p {
+  color: var(--gold);
+  margin-block-start: 4px;
+}
+.proposal-report-section {
+  margin-block: 15px 0;
+  padding-block: 15px 0;
+  border-block-start: 1px solid var(--line);
+}
+.proposal-report-section h3 {
+  margin: 0 0 8px;
+}
+.proposal-detail-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+.proposal-detail-list dt {
+  font-size: .82rem;
+  color: var(--muted);
+}
+.proposal-detail-list dd,
+.proposal-report dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.proposal-detail-list dd {
+  font-weight: 600;
+}
+.proposal-report-note {
+  margin-block-start: 14px;
+  color: var(--muted);
+  font-size: .875rem;
+}
+.proposal-report .broker-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.proposal-share {
+  margin-block-start: 12px;
+}
+.proposal-share-box {
+  margin-block-start: 10px;
+  padding-block-start: 10px;
+  border-block-start: 1px solid var(--line);
+}
+.proposal-share-box textarea {
+  inline-size: 100%;
+  resize: vertical;
+}
+.proposal-schedule-table {
+  margin-block-start: 8px;
+}
+.proposal-schedule-table th[scope="row"] {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.proposal-sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 1050px) {
+  .proposal-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .plan-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media print {
+  .proposal-screen-heading,
+  .proposal-input,
+  .proposal-share,
+  .proposal-print-hint {
+    display: none !important;
+  }
+  .proposal-layout {
+    display: block;
+  }
+  .proposal-report {
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+  .proposal-report-header,
+  .proposal-report-section h3,
+  .proposal-report .broker-metric,
+  .proposal-schedule-table tr {
+    break-inside: avoid;
+  }
+  .proposal-report-section h3 {
+    break-after: avoid;
+  }
+  .proposal-schedule-table {
+    overflow: visible;
+  }
+  .proposal-schedule-table table {
+    width: 100%;
+    min-width: 0;
+  }
+  .proposal-schedule-table thead {
+    display: table-header-group;
+  }
+  .proposal-schedule-table th,
+  .proposal-schedule-table td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}

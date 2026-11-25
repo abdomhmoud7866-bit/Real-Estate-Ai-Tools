@@ -1,0 +1,83 @@
+.sales-screen .broker-card { min-inline-size: 0; }
+.sales-commission-grid { align-items: start; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.sales-fields { grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
+.sales-metrics { margin-block: 0; }
+.sales-metrics dd { font-variant-numeric: tabular-nums; }
+.sales-method {
+  margin-block-start: 18px;
+  padding-block-start: 14px;
+  border-block-start: 1px solid var(--line);
+}
+.sales-method h3, .sales-target-form h3 { font-size: 15px; }
+.sales-method p {
+  margin-block-start: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.sales-period {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-block-end: 16px;
+}
+.sales-period .broker-field { min-width: min(100%, 200px); }
+.sales-period .sales-hint { margin-block-end: 8px; }
+.sales-hint { color: var(--muted); font-size: 13px; }
+.sales-screen :is(.broker-notice[role="status"], .broker-error) { margin-block: 8px; }
+.sales-secondary-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  margin-block-start: 16px;
+}
+.sales-progress-group { display: grid; gap: 9px; }
+.sales-progress-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--page);
+}
+.sales-progress-item > :not(.sales-progress-percent) { grid-column: 1 / -1; }
+.sales-progress-label { font-size: 13px; font-weight: 650; }
+.sales-progress-item progress {
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--line);
+}
+.sales-progress-item progress::-webkit-progress-bar { border-radius: 8px; background: var(--line); }
+.sales-progress-item progress::-webkit-progress-value { border-radius: 8px; background: var(--gold); }
+.sales-progress-item progress::-moz-progress-bar { border-radius: 8px; background: var(--gold); }
+.sales-progress-group .sales-progress-value {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.sales-progress-percent { grid-column: 2; color: var(--gold); font-size: 12px; font-weight: 700; }
+.sales-target-form { margin-block-start: 17px; }
+.sales-target-form .broker-fields { margin-block-start: 10px; }
+.sales-pipeline { display: grid; gap: 12px; margin-block: 15px; }
+.sales-pipeline-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 8px; }
+.sales-pipeline-row dt { font-size: 13px; font-weight: 650; }
+.sales-pipeline-row dd { margin: 0; font-weight: 700; }
+.sales-pipeline-bar { grid-column: 1 / -1; }
+.sales-pipeline-row meter {
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--line);
+  border-radius: 8px;
+}
+.sales-pipeline-row meter::-webkit-meter-bar { height: 8px; border: 0; background: var(--line); border-radius: 8px; }
+.sales-pipeline-row meter::-webkit-meter-optimum-value { background: var(--gold); border-radius: 8px; }
+.sales-pipeline-row meter::-moz-meter-bar { background: var(--gold); border-radius: 8px; }
+.sales-crm-link { display: inline-flex; align-items: center; }
+@media (max-width: 1040px) {
+  .sales-commission-grid, .sales-secondary-grid { grid-template-columns: minmax(0, 1fr); }
+}

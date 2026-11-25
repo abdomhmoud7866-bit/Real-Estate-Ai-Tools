@@ -1,6 +1,6 @@
 {
   "name": "the-spider-dxb",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -9,6 +9,13 @@
   },
   "scripts": {
     "start": "python3 -m http.server --bind 127.0.0.1 8000",
-    "test": "node --test finance.test.js"
+    "test": "node --test finance.test.js \"test/**/*.test.js\"",
+    "test:e2e": "playwright test"
+  },
+  "description": "Open-source UAE real estate broker and investment workspace",
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.1",
+    "@playwright/test": "1.65.1",
+    "fake-indexeddb": "6.2.5"
   }
 }

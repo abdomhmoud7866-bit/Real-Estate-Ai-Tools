@@ -2,16 +2,22 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="theme-color" content="#181712">
-  <meta name="description" content="THE SPIDER DXB is an open-source UAE real estate workspace for rental yield, mortgage, developer payment plans, property comparisons and resale scenarios.">
-  <meta property="og:title" content="THE SPIDER DXB | UAE Property Investment Tools">
-  <meta property="og:description" content="Model UAE property investments with transparent financial assumptions and local calculations.">
+  <meta name="description" content="THE SPIDER DXB is an open-source UAE real estate broker workspace for local client management, inventory, investment proposals and financial analysis.">
+  <meta property="og:title" content="THE SPIDER DXB | UAE Real Estate Broker Workspace">
+  <meta property="og:description" content="Manage property deals and create investment proposals with transparent, browser-based calculations.">
   <meta property="og:type" content="website">
-  <title>THE SPIDER DXB | UAE Property Investment Tools</title>
+  <title>THE SPIDER DXB | UAE Real Estate Broker Workspace</title>
   <link rel="icon" href="./mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./tools.css">
+  <link rel="stylesheet" href="./broker.css">
+  <link rel="stylesheet" href="./broker-records.css">
+  <link rel="stylesheet" href="./broker-proposal.css">
+  <link rel="stylesheet" href="./broker-sales.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -24,16 +30,23 @@
     <nav aria-label="Workspace" id="primary-nav">
       <p class="nav-caption" data-copy="workspace">Workspace</p>
       <a href="#overview" data-route="overview" aria-current="page"><span data-icon="grid"></span><span data-copy="overview">Overview</span></a>
+      <a href="#clients" data-route="clients"><span data-icon="users"></span><span data-copy="clients">Clients</span></a>
+      <a href="#inventory" data-route="inventory"><span data-icon="building"></span><span data-copy="inventory">Property inventory</span></a>
+      <a href="#custom-plans" data-route="custom-plans"><span data-icon="list"></span><span data-copy="custom-plans">Custom plans</span></a>
+      <a href="#proposals" data-route="proposals"><span data-icon="document"></span><span data-copy="proposals">Investment proposals</span></a>
+      <a href="#performance" data-route="performance"><span data-icon="target"></span><span data-copy="performance">Sales performance</span></a>
+      <a href="#data" data-route="data"><span data-icon="database"></span><span data-copy="data">Workspace data</span></a>
       <p class="nav-caption" data-copy="toolNav">Financial tools</p>
       <a href="#investment" data-route="investment"><span data-icon="chart"></span><span data-copy="investment">Investment analysis</span></a>
       <a href="#mortgage" data-route="mortgage"><span data-icon="home"></span><span data-copy="mortgage">Mortgage calculator</span></a>
       <a href="#payments" data-route="payments"><span data-icon="calendar"></span><span data-copy="payments">Payment plans</span></a>
       <a href="#compare" data-route="compare"><span data-icon="compare"></span><span data-copy="compare">Compare properties</span></a>
       <a href="#resale" data-route="resale"><span data-icon="trend"></span><span data-copy="resale">Resale scenarios</span></a>
+      <a href="#commission" data-route="commission"><span data-icon="wallet"></span><span data-copy="commission">Commission calculator</span></a>
     </nav>
     <div class="sidebar-footer">
       <a href="https://github.com/abdomhmoud7866-bit/Real-Estate-Ai-Tools" class="source-link"><span data-icon="code"></span><span data-copy="source">GitHub repository</span><span data-icon="external"></span></a>
-      <p><span class="currency-dot"></span><span data-copy="currency">AED · UAE dirham</span></p>
+      <p><span class="currency-dot"></span><span data-copy="currency">AED · UAE dirham</span><span class="release-version" dir="ltr">v0.3.0</span></p>
     </div>
   </aside>
   <div id="print-brand" class="print-brand">
@@ -56,26 +69,44 @@
         <button class="icon-button" id="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false"><span data-icon="moon"></span></button>
       </div>
     </header>
+    <div id="update-notice" class="update-notice" hidden>
+      <span role="status" data-copy="updateReady">An update is ready. Save any edits before reloading.</span>
+      <button class="icon-button" type="button" id="reload-app" data-copy="reloadApp">Reload</button>
+    </div>
     <main id="main-content" tabindex="-1">
       <section id="overview" class="overview" aria-labelledby="overview-title">
         <div class="page-heading">
           <div>
-            <h1 id="overview-title" tabindex="-1" data-copy="overviewTitle">Investment overview</h1>
-            <p data-copy="overviewDescription">Analyze UAE property deals, from purchase costs to exit returns.</p>
+            <h1 id="overview-title" tabindex="-1" data-copy="overviewTitle">Broker overview</h1>
+            <p data-copy="overviewDescription">See which clients need a follow-up and find the tools for your next deal.</p>
           </div>
-          <span class="sample-label"><span class="sample-dot"></span><span data-copy="sample">Illustrative figures</span></span>
+          <a class="sample-label" href="#data"><span data-icon="lock"></span><span data-copy="localWorkspace">Data stays on this device</span></a>
         </div>
         <section class="hero" aria-labelledby="hero-title">
           <div class="hero-inner">
             <p class="hero-kicker"><span data-icon="pin"></span><span data-copy="heroKicker">UAE PROPERTY WORKSPACE</span></p>
-            <h2 id="hero-title" data-copy="heroTitle">Underwrite your next property.</h2>
-            <p class="hero-description" data-copy="heroDescription">Estimate returns, model financing and compare payment schedules before committing to a deal.</p>
-            <a class="hero-button" href="#investment"><span data-copy="heroAction">Analyze an investment</span><span data-icon="arrow"></span></a>
+            <h2 id="hero-title" data-copy="heroTitle">Prepare your next property proposal.</h2>
+            <p class="hero-description" data-copy="heroDescription">Combine a property, its payment schedule and financing assumptions into one investment proposal.</p>
+            <a class="hero-button" href="#proposals"><span data-copy="heroAction">Create a proposal</span><span data-icon="arrow"></span></a>
           </div>
+        </section>
+        <section class="snapshot" aria-labelledby="pipeline-title">
+          <div class="section-heading">
+            <div><h2 id="pipeline-title" data-copy="pipelineTitle">Pipeline at a glance</h2><p data-copy="pipelineDescription">Counts from your local client and property records.</p></div>
+            <a href="#performance" class="text-link"><span data-copy="viewPerformance">View sales performance</span><span data-icon="arrow"></span></a>
+          </div>
+          <p id="pipeline-status" class="pipeline-status" role="status"></p>
+          <div class="snapshot-grid" id="pipeline-grid"></div>
+        </section>
+        <section class="tool-section" aria-labelledby="broker-tools-heading">
+          <div class="section-heading">
+            <div><h2 id="broker-tools-heading" data-copy="brokerToolsTitle">Broker workspace</h2></div>
+          </div>
+          <div class="tool-link-grid" id="broker-link-grid"></div>
         </section>
         <section class="snapshot" aria-labelledby="snapshot-title">
           <div class="section-heading">
-            <div><h2 id="snapshot-title" data-copy="snapshotTitle">Sample investment</h2><p data-copy="snapshotDescription">A starting point for exploring the rental yield calculator.</p></div>
+            <div><h2 id="snapshot-title" data-copy="snapshotTitle">Sample investment</h2><p data-copy="snapshotDescription">Illustrative figures for exploring the rental yield calculator.</p></div>
             <a href="#investment" class="text-link"><span data-copy="seeAssumptions">Open yield calculator</span><span data-icon="arrow"></span></a>
           </div>
           <div class="snapshot-grid" id="snapshot-grid"></div>
@@ -88,12 +119,18 @@
         </section>
       </section>
       <div id="tool-view" hidden></div>
-      <noscript><p>Enable JavaScript to use the calculators. Your inputs are calculated in your browser.</p></noscript>
+      <noscript><p>Enable JavaScript to use the workspace and calculators. Your inputs are calculated in your browser.</p></noscript>
     </main>
     <footer class="app-footer">
       <span dir="ltr">THE SPIDER DXB</span>
       <span data-copy="footerNote">Estimates are calculated in your browser. Verify costs and contract terms independently.</span>
     </footer>
   </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Quick navigation">
+    <a href="#overview" data-route="overview" aria-current="page"><span data-icon="grid"></span><span data-copy="overview">Overview</span></a>
+    <a href="#clients" data-route="clients"><span data-icon="users"></span><span data-copy="clients">Clients</span></a>
+    <a href="#inventory" data-route="inventory"><span data-icon="building"></span><span data-copy="mobileInventory">Inventory</span></a>
+    <a href="#proposals" data-route="proposals"><span data-icon="document"></span><span data-copy="mobileProposals">Proposals</span></a>
+  </nav>
 </body>
 </html>
